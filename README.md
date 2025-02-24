@@ -26,15 +26,46 @@ poetry add django
 ```
 django-admin startproject config .
 ```
-5. Инициализация проекта внутри текущей директории:
+6. Создали модели Product и Category и описали их:
 ```
-django-admin startproject config .
+в файле catalog/models.py
 ```
-5. Инициализация проекта внутри текущей директории:
+7. Установили пакет Pillow для модели ImageField:
 ```
-python manage.py startapp catalog
+poetry add pillow
 ```
-
+8. Создали миграцию моделей:
+```
+python manage.py makemigrations
+```
+9. Применяем миграции к базе данным:
+```
+python manage.py migrate
+```
+10. Создали суперпользователь:
+```
+python manage.py createsuperuser
+```
+11. Зарегистрировали модель Product и Category в админке:
+```
+в файле catalog/admin.py
+```
+12. Установили пакет ipython:
+```
+poerty add ipython
+```
+13. Вошли в django shell, выполнили определнные запросы и вышли:
+```
+python manage.py shell
+```
+14. Сформировали фикстуры:
+```
+python -Xutf8 manage.py dumpdata catalog.Category catalog.Product --output catalog.json --indent 4
+```
+15. Создали кастомную команду для добавления продуктов:
+```
+в файле catalog/management/commands/add_catalog.py
+```
 ## Использование:
 
 1. Запуска программы:
