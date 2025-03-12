@@ -17,7 +17,9 @@
                 <img src="{{ product.image.url }}" class="w-50" alt="...">
                 <h1 class="card-title pricing-card-title">{{ product.price }} руб. за кг.</h1>
                 <p>Описание: {{ product.description|truncatechars:100 }}</p>
-                <a class="btn btn-primary w-100  " href="{% url 'catalog:product_detail' product.pk %}" role="button">Купить</a>
+                <a class="btn btn-primary  " href="{% url 'catalog:product_detail' product.pk %}" role="button">Купить</a>
+                <a class="btn btn-primary  " href="{% url 'catalog:product_edit' product.pk %}" role="button">Редоктировать</a>
+                <a class="btn btn-primary  " href="{% url 'catalog:product_delete' product.pk %}" role="button">Удалить</a>
             </div>
         </div>
     </div>
