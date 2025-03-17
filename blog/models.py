@@ -5,7 +5,7 @@ class Blog(models.Model):
     title = models.CharField(max_length=150, verbose_name="Заголовок")
     content = models.TextField(verbose_name="Содержимое")
     image = models.ImageField(
-        upload_to="media/image", blank=True, null=True, verbose_name="Изображение"
+        upload_to="media/images", blank=True, null=True, verbose_name="Изображение"
     )
     created_at = models.DateField(auto_now_add=True, verbose_name="Дата создания")
     publication = models.BooleanField(default=True, verbose_name="публикация")

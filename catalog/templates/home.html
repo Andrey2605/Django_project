@@ -14,7 +14,7 @@
                 <h4 class="my-0 fw-normal">{{ product.names }}</h4>
             </div>
             <div class="card-body">
-                <img src="{{ product.image.url }}" class="w-50" alt="...">
+                <img src="{{ product.image.url }}" class="img-fluid" style="height: 180px;">
                 <h1 class="card-title pricing-card-title">{{ product.price }} руб. за кг.</h1>
                 <p>Описание: {{ product.description|truncatechars:100 }}</p>
                 <a class="btn btn-primary  " href="{% url 'catalog:product_detail' product.pk %}" role="button">Купить</a>
