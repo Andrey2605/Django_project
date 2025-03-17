@@ -59,8 +59,10 @@ class ProductForm(forms.ModelForm):
                 raise ValidationError(
                     "Название и описание не должны содержать запрещенные слова."
                 )
+        return self.cleaned_data
 
     def clean_price(self):
         price = self.cleaned_data.get("price")
         if price < 0:
             raise ValidationError("Цена продукта не может быть отрицательной.")
+        return price
