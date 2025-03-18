@@ -18,8 +18,12 @@
                 <h1 class="card-title pricing-card-title">{{ product.price }} руб. за кг.</h1>
                 <p>Описание: {{ product.description|truncatechars:100 }}</p>
                 <a class="btn btn-primary  " href="{% url 'catalog:product_detail' product.pk %}" role="button">Купить</a>
+                 {% if product.owner == user %}
                 <a class="btn btn-primary  " href="{% url 'catalog:product_edit' product.pk %}" role="button">Редоктировать</a>
+                {% endif %}
+                {% if product.owner == user or 'catalog.product_delete' in perms %}
                 <a class="btn btn-primary  " href="{% url 'catalog:product_delete' product.pk %}" role="button">Удалить</a>
+                {% endif %}
             </div>
         </div>
     </div>

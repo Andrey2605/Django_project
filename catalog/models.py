@@ -1,5 +1,8 @@
 from django.db import models
 
+from config import settings
+from users.models import CustomUser
+
 
 class Category(models.Model):
     name = models.CharField(
@@ -42,11 +45,23 @@ class Product(models.Model):
     updated_at = models.DateField(
         auto_now_add=True, verbose_name="Дата последнего изменения"
     )  # дата последнего изменения.
+    publication = models.BooleanField(default=False, verbose_name="Статус публикации")
+    owner = models.ForeignKey(
+        CustomUser,
+        verbose_name="имя владельца",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
 
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ["names", "category"]
+        permissions = [
+            ("can_unpublish_product", "Can unpublish product"),
+            ("remove_any_product", "Remove any product"),
+        ]
 
     def __str__(self):
         return self.names

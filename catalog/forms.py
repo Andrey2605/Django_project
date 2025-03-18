@@ -19,7 +19,7 @@ forbidden = [
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ["names", "description", "image", "category", "price"]
+        fields = ["names", "description", "image", "category", "price", "publication"]
 
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
