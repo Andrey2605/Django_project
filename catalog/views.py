@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -8,7 +9,21 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   TemplateView, UpdateView)
 
 from catalog.forms import ProductForm
-from catalog.models import Product
+from catalog.models import Category, Product
+from catalog.servise import get_products_by_category, get_products_from_cache
+
+
+def my_view(request):
+    # Попытка получить данные из кеша
+    data = cache.get("my_key")
+
+    # Если данные не найдены в кеше, выполняем вычисления и сохраняем результат в кеш
+    if not data:
+        data = "some expensive computation"
+        cache.set("my_key", data, 60 * 15)  # Кешируем данные на 15 минут
+
+    # Возвращаем ответ с данными
+    return HttpResponse(data)
 
 
 class UnpublishedProductView(LoginRequiredMixin, View):
@@ -28,6 +43,23 @@ class ProductsListView(ListView):
     model = Product
     template_name = "catalog/home.html"
     context_object_name = "products"
+
+    def get_queryset(self):
+        return get_products_from_cache()
+
+
+class ProductsByCategoryView(ListView):
+    model = Category
+    template_name = "catalog/home.html"
+    context_object_name = "products_by_category"
+
+    def get_queryset(self):
+        category_id = self.kwargs.get("pk")
+        return get_products_by_category(category_id=category_id)
+
+
+class CategoryListView(ListView):
+    model = Category
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
